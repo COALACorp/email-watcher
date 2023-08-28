@@ -101,6 +101,7 @@ async function SendEmails() {
     };
 }
 
+console.log(new Date().toLocaleString(), "- Execution start");
 await SendEmails();
-
 db.end();
+console.log(new Date().toLocaleString(), "- Execution end");
