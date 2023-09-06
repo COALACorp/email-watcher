@@ -33,7 +33,7 @@ async function SendDocDenial(email, userName, fileName, reason) {
         console.log("\t✅ Email sent");
         result = true;
     } catch (error) {
-        console.log("\t❌ Error while sending doc denial:", payload);
+        console.log("\t❌ Error while sending doc denial:", payload, "Error:", error);
     }
     return [result, response?.data ?? "Error"];
 }
@@ -51,7 +51,7 @@ async function SendApplicationApproval(email, userName) {
         console.log("\t✅ Email sent");
         result = true;
     } catch (error) {
-        console.log("\t❌ Error while sending application approval:", payload);
+        console.log("\t❌ Error while sending application approval:", payload, "Error:", error);
     }
     return [result, response?.data ?? "Error"];
 }
@@ -79,7 +79,7 @@ async function SendEmails() {
     const pending = await GetPendingEmails();
     console.log("Pending emails:", pending.length);
     for (let email of pending) {
-        console.log("🔰Sending email:", email.id);
+        console.log("🔰--------------------Sending email:", email.id);
         try {
             let response = "Not sent";
             switch (email.category) {
@@ -97,7 +97,7 @@ async function SendEmails() {
         } catch (error) {
             console.log("\t❌ Error while sending email:", email.id, error);
         }
-        console.log("🛑 Finished sending email:", email.id);
+        console.log("🛑--------------------Finished sending email:", email.id);
     };
 }
 
