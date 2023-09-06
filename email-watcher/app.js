@@ -35,7 +35,7 @@ async function SendDocDenial(email, userName, fileName, reason) {
     } catch (error) {
         console.log("\t❌ Error while sending doc denial:", payload);
     }
-    return [result, response.data];
+    return [result, response?.data ?? "Error"];
 }
 
 async function SendApplicationApproval(email, userName) {
@@ -53,7 +53,7 @@ async function SendApplicationApproval(email, userName) {
     } catch (error) {
         console.log("\t❌ Error while sending application approval:", payload);
     }
-    return [result, response.data];
+    return [result, response?.data ?? "Error"];
 }
 
 function GetPendingEmails() {
