@@ -28,14 +28,16 @@ async function SendDocDenial(email, userName, fileName, reason) {
     console.log("\tSend doc denial:", payload);
     let result = false;
     let response = null;
+    let error = null;
     try {
         response = await emailer.post("/docs/denied", payload);
         console.log("\t✅ Email sent");
         result = true;
-    } catch (error) {
-        console.log("\t❌ Error while sending doc denial:", payload, "Error:", error);
+    } catch (err) {
+        error = err;
+        console.log("\t❌ Error while sending doc denial:", payload, "Error:", err);
     }
-    return [result, response?.data ?? "Error"];
+    return [result, response?.data ?? error];
 }
 
 async function SendApplicationApproval(email, userName) {
@@ -46,14 +48,16 @@ async function SendApplicationApproval(email, userName) {
     console.log("\tSend application approval:", payload);
     let result = false;
     let response = null;
+    let error = null;
     try {
         response = await emailer.post("/application/approved", payload);
         console.log("\t✅ Email sent");
         result = true;
-    } catch (error) {
-        console.log("\t❌ Error while sending application approval:", payload, "Error:", error);
+    } catch (err) {
+        error = err;
+        console.log("\t❌ Error while sending application approval:", payload, "Error:", err);
     }
-    return [result, response?.data ?? "Error"];
+    return [result, response?.data ?? error];
 }
 
 function GetPendingEmails() {
