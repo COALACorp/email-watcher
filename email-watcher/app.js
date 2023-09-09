@@ -2,7 +2,7 @@ import "dotenv/config";
 import axios from "axios";
 import mysql from "mysql2";
 
-const { API_ENDPOINT, DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_DATABASE } = process.env;
+const { API_ENDPOINT, DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_DATABASE, EXECUTION_DELAY_MILLISECONDS } = process.env;
 
 const emailer = axios.create({
     baseURL: API_ENDPOINT,
@@ -105,7 +105,18 @@ async function SendEmails() {
     };
 }
 
+function sleep(ms) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
+}
+
 console.log(new Date().toLocaleString(), "- Execution start");
-await SendEmails();
+while (true) {
+    console.log(new Date().toLocaleString(), "🔁--------------------Loop start");
+    await SendEmails();
+    console.log(new Date().toLocaleString(), "🔁--------------------Loop end");
+    await sleep(Number(EXECUTION_DELAY_MILLISECONDS));
+}
 db.end();
 console.log(new Date().toLocaleString(), "- Execution end");
